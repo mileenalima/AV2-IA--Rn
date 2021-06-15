@@ -1,0 +1,86 @@
+import random
+
+
+class Entrds():
+    def _init_(self, valor, pesos):
+        self.valor = int(valor)
+        self.pesos = dict(pesos)
+
+
+def somat(entrds, peso):
+    print(f'Peso do Somatório selecionado = {peso}')
+    constante = 0
+    valor_somat = 0
+    for e in entrds:
+        valor_somat += e['valor'] * e['pesos'][peso]
+    return round(valor_somat + constante, 2)
+
+
+def custo(valor_obitido, valor_ideal):
+    return round(((valor_obitido - valor_ideal) ** 2), 2)
+
+
+def gerar_pesos(qtdd_pesos):
+    pesos = {}
+    for n_peso in range(qtdd_pesos):
+        pesos[f'w{n_peso}'] = round(random.random(), 2)
+    return pesos
+
+
+def gera_lista_entrds(qtdd_entrds, qtdd_pesos_por_entrds):
+    entrds = []
+    for n_entrds in range(qtdd_entrds):
+        vars()[f'e{str(n_entrds)}'] = {
+            "nome": f'Entrada {str(n_entrds)}',
+            "valor": round(random.random(), 2),
+            "pesos": gerar_pesos(qtdd_pesos_por_entrds)
+        }
+        entrds.append(vars()[f'e{str(n_entrds)}'])
+    return entrds
+
+
+def chamada_peso_randomico(entrd):
+    return f'w{str(random.randint(0, len(entrd["pesos"]) - 1))}'
+
+
+def chamada_peso_randomico(valor):
+    return f'w{str(random.randint(0, int(valor) - 1))}'
+
+
+def print_lista_entrds(entrds):
+    for item in entrds:
+        print(f'{item["nome"]}: valor = {item["valor"]}, pesos = {item["pesos"]} ')
+    print('\n')
+
+
+def print_lista_entrds_bruta(entrds):
+    for item in entrds:
+        print(item)
+    print("\n")
+
+
+def run():
+    # variaveis de entradas e pesos
+    qtdd_entrds = 10
+    qtdd_pesos = 10
+
+    print('\n=-=-=-=-=-=-=-= Start =-=-=-\n')
+    print(f'Quantidade de entradas: {qtdd_entrds}\nQuantidade de pesos por entrada: {qtdd_pesos}\n')
+
+    entrds = gera_lista_entrds(qtdd_entrds, qtdd_pesos)
+
+    print_lista_entrds(entrds)
+
+    somats = somat(entrds, chamada_peso_randomico(qtdd_pesos))
+
+    print(f'Valor da Função Ativação: {somats}')
+
+    custos = custo(somats, 1)
+
+    print(f'Valor da Função Custo: {custos}')
+
+    print('\n-=-=-=- End -=-=-=-\n')
+
+
+if __name__ == '__main__':
+    run()
